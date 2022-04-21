@@ -1,6 +1,5 @@
 class Player
-  attr_accessor :name
-  attr_reader :health
+  attr_reader :name, :health
 
   def initialize(name, health = 100)
     @name = name.capitalize
@@ -34,8 +33,20 @@ player1 = Player.new('larry', 60)
 player2 = Player.new('curly', 125)
 player3 = Player.new('moe')
 
-player1.name = 'lawrence'
+players = [player1, player2, player3]
 
-puts player1
-puts player2
-puts player3
+puts "The are #{players.size} in the game:"
+players.each do |p|
+  puts p
+end
+
+players.each do |p|
+  puts p.health
+end
+
+players.each do |p|
+  p.w00t
+  p.blam
+  p.w00t
+  puts "#{p}\n\n"
+end
