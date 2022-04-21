@@ -29,24 +29,40 @@ class Player
   end
 end
 
+class Game
+  attr_reader :title
+
+  def initialize(title)
+    @title = title
+    @players = []
+  end
+
+  def add_player(player)
+    @players << player
+  end
+
+  def play
+    puts "The are #{@players.size} in #{@title}:"
+
+    @players.each do |p|
+      puts p
+    end
+
+    @players.each do |p|
+      p.w00t
+      p.blam
+      p.w00t
+      puts "#{p}\n\n"
+    end
+  end
+end
+
 player1 = Player.new('larry', 60)
 player2 = Player.new('curly', 125)
 player3 = Player.new('moe')
 
-players = [player1, player2, player3]
-
-puts "The are #{players.size} in the game:"
-players.each do |p|
-  puts p
-end
-
-players.each do |p|
-  puts p.health
-end
-
-players.each do |p|
-  p.w00t
-  p.blam
-  p.w00t
-  puts "#{p}\n\n"
-end
+knuckleheads = Game.new('Knuckleheads')
+knuckleheads.add_player(player1)
+knuckleheads.add_player(player2)
+knuckleheads.add_player(player3)
+knuckleheads.play
