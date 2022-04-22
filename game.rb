@@ -1,7 +1,10 @@
 require_relative 'player'
 require_relative 'die'
+require_relative 'game_turn'
 class Game
   attr_reader :title
+
+  include GameTurn
 
   def initialize(title)
     @title = title
@@ -12,26 +15,13 @@ class Game
     @players << player
   end
 
-  def print_player_names
-    @players.each do |p|
-      puts p
-    end
-  end
-
   def play
     puts "The are #{@players.size} in #{@title}:"
 
-    print_player_names
+    GameTurn.print_player_names(@players)
 
     @players.each do |p|
-      case Die.roll
-      when 1..2
-        p.blam
-      when 3..4
-        puts "#{p.name} was skipped"
-      else
-        p.w00t
-      end
+      GameTurn.take_turn(p)
       puts "#{p}\n\n"
     end
   end
