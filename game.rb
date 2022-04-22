@@ -2,7 +2,7 @@ require_relative 'player'
 require_relative 'die'
 require_relative 'game_turn'
 class Game
-  attr_reader :title
+  attr_reader :title, :players
 
   include GameTurn
 
@@ -15,14 +15,19 @@ class Game
     @players << player
   end
 
-  def play
+  def play(rounds)
     puts "The are #{@players.size} in #{@title}:"
 
     GameTurn.print_player_names(@players)
 
-    @players.each do |p|
-      GameTurn.take_turn(p)
-      puts "#{p}\n\n"
+    1.upto(rounds) do |round|
+      @players.each do |player|
+        puts "\nRound #{round}:"
+        GameTurn.take_turn(player)
+        puts player
+      end
     end
+    GameTurn.print_stats(@title, @players)
+    GameTurn.print_scores(@title, @players)
   end
 end
