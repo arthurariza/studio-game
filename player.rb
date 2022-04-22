@@ -14,6 +14,10 @@ class Player
     @name = name.capitalize
   end
 
+  def strong?
+    @health > 100
+  end
+
   def score
     @health + @name.size
   end

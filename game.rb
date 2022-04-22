@@ -1,3 +1,5 @@
+require_relative 'player'
+require_relative 'die'
 class Game
   attr_reader :title
 
@@ -10,17 +12,26 @@ class Game
     @players << player
   end
 
-  def play
-    puts "The are #{@players.size} in #{@title}:"
-
+  def print_player_names
     @players.each do |p|
       puts p
     end
+  end
+
+  def play
+    puts "The are #{@players.size} in #{@title}:"
+
+    print_player_names
 
     @players.each do |p|
-      p.w00t
-      p.blam
-      p.w00t
+      case Die.roll
+      when 1..2
+        p.blam
+      when 3..4
+        puts "#{p.name} was skipped"
+      else
+        p.w00t
+      end
       puts "#{p}\n\n"
     end
   end

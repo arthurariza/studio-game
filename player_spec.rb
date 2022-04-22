@@ -1,5 +1,6 @@
 require_relative 'player'
 
+# rubocop:disable Metrics/BlockLength
 RSpec.describe Player do
   before do
     # Disable puts on test runs
@@ -36,6 +37,20 @@ RSpec.describe Player do
     let!(:no_health) { Player.new('Steve') }
     it 'has a default value of 100' do
       expect(no_health.health).to eq(100)
+    end
+  end
+
+  context 'with a health greater than 100' do
+    it 'is strong' do
+      strong_player = Player.new('Strong', 150)
+      expect(strong_player).to be_strong
+    end
+  end
+
+  context 'with a health lower than 100' do
+    it 'is wimpy' do
+      wimpy_player = Player.new('Wimpy', 100)
+      expect(wimpy_player).not_to be_strong
     end
   end
 end
