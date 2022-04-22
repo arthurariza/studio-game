@@ -49,7 +49,7 @@ RSpec.describe Player do
 
   context 'with a health lower than 100' do
     it 'is wimpy' do
-      wimpy_player = Player.new('Wimpy', 100)
+      wimpy_player = Player.new('Wimpy', 99)
       expect(wimpy_player).not_to be_strong
     end
   end
