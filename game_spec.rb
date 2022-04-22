@@ -51,22 +51,32 @@ RSpec.describe Game do
 
     it 'prints the stats' do
       allow(Die).to receive(:roll).and_return(3)
+      allow(TreasureTrove).to receive(:random).and_return(Treasure.new(:hammer, 50))
 
       game.play(3)
 
       expect do
         GameTurn.print_stats(game.title, game.players)
-      end.to output("\nKnuckleheads Statistics:\n\n1 strong player(s):\nMoe (103)\n\n2 wimpy player(s):\nCurly (85)\nLarry (100)\n").to_stdout
+      end.to output("\nKnuckleheads Statistics:\n\nMoe's point totals:\n150 grand total points\n\nCurly's point totals:\n150 grand total points\n\nLarry's point totals:\n150 grand total points\n").to_stdout
     end
 
     it 'prints the scores' do
       allow(Die).to receive(:roll).and_return(3)
+      allow(TreasureTrove).to receive(:random).and_return(Treasure.new(:hammer, 50))
 
       game.play(3)
 
       expect do
         GameTurn.print_scores(game.title, game.players)
-      end.to output("\nKnuckleheads High Scores:\nMoe................. 103\nLarry............... 100\nCurly............... 85\n").to_stdout
+      end.to output("\nKnuckleheads High Scores:\nMoe................. 250\nLarry............... 245\nCurly............... 230\n").to_stdout
     end
+  end
+
+  it "assigns a treasure for points during a player's turn" do
+    game.add_player(player)
+
+    game.play(1)
+
+    expect(player.points).not_to be_zero
   end
 end

@@ -8,6 +8,8 @@ RSpec.describe Player do
   end
 
   let!(:player) { Player.new('aaron', 80) }
+  let(:hammer) { Treasure.new(:hammer, 50) }
+  let(:crowbar) { Treasure.new(:crowbar, 400) }
 
   it 'has a capitialized name' do
     expect(player.name).to eq 'Aaron'
@@ -17,12 +19,15 @@ RSpec.describe Player do
     expect(player.health).to eq 80
   end
 
-  it 'has a string representation' do
-    expect(player.to_s).to eq "I'm Aaron with a health of 80 and a score of 85"
+  it 'has an empty found_treasures hash' do
+    expect(player.found_treasures).to be_empty
   end
 
-  it 'computes a score as the sum of its health and length of name' do
-    expect(player.score).to eq 85
+  it 'has a string representation' do
+    player.found_treasure(Treasure.new(:hammer, 50))
+    player.found_treasure(Treasure.new(:hammer, 50))
+
+    expect(player.to_s).to eq "I'm Aaron with a health = 80, points = 100, and a score of 180"
   end
 
   it 'increases health by 15 when w00ted' do
@@ -53,4 +58,42 @@ RSpec.describe Player do
       expect(wimpy_player).not_to be_strong
     end
   end
+
+  context 'when founding a treasure' do
+    it 'adds the treasure to the found_treasures hash' do
+      player.found_treasure(hammer)
+
+      expect(player.found_treasures).to include({ hammer: 50 })
+    end
+
+    it 'prints the player name and points of the treasure and then all the players treasures' do
+      expect { player.found_treasure(crowbar) }.to output(/Aaron found a crowbar worth 400 points/).to_stdout
+    end
+
+    xit "prints all the player's treasure" do
+      expect { player.found_treasure(crowbar) }.to output(/Aaron's treasures: {:crowbar => 400}/).to_stdout
+    end
+
+    it 'computes a score as the sum of its health and points' do
+      player.found_treasure(hammer)
+      player.found_treasure(crowbar)
+
+      expect(player.score).to eq 530
+    end
+
+    it 'computes points as the sum of all treasure points' do
+      expect(player.points).to eq 0
+
+      player.found_treasure(hammer)
+      expect(player.points).to eq 50
+
+      player.found_treasure(crowbar)
+      expect(player.points).to eq 450
+
+      player.found_treasure(hammer)
+      expect(player.points).to eq 500
+    end
+  end
+
+  # rubocop:enable Metrics/BlockLength
 end

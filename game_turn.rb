@@ -10,7 +10,7 @@ module GameTurn
       player.w00t
     end
     treasure = TreasureTrove.random
-    puts "#{player.name} found a #{treasure.name} worth #{treasure.points} points."
+    player.found_treasure(treasure)
   end
 
   def self.print_player_names(players)
@@ -20,14 +20,12 @@ module GameTurn
   end
 
   def self.print_stats(title, players)
-    strong_players, wimpy_players = players.partition(&:strong?)
     puts "\n#{title} Statistics:"
 
-    puts "\n#{strong_players.size} strong player(s):"
-    strong_players.each { |p| puts "#{p.name} (#{p.score})" }
-
-    puts "\n#{wimpy_players.size} wimpy player(s):"
-    wimpy_players.each { |p| puts "#{p.name} (#{p.score})" }
+    players.each do |player|
+      puts "\n#{player.name}'s point totals:"
+      puts "#{player.points} grand total points"
+    end
   end
 
   def self.print_scores(title, players)
