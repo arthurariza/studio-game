@@ -1,7 +1,8 @@
 require_relative 'player'
 
-describe Player do
+RSpec.describe Player do
   before do
+    # Disable puts on test runs
     $stdout = StringIO.new
   end
 
