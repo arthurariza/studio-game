@@ -31,6 +31,13 @@ RSpec.describe Player do
     expect(player.to_s).to eq "I'm Aaron with a health = 80, points = 100, and a score of 180"
   end
 
+  it 'can be created from a CSV string' do
+    player = Player.from_csv('larry,150')
+
+    expect(player.name).to eq 'Larry'
+    expect(player.health).to eq 150
+  end
+
   it 'increases health by 15 when w00ted' do
     expect { player.w00t }.to change { player.health }.from(80).to(95)
   end
