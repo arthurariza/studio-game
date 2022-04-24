@@ -10,6 +10,7 @@ RSpec.describe Player do
   let!(:player) { Player.new('aaron', 80) }
   let(:hammer) { Treasure.new(:hammer, 50) }
   let(:crowbar) { Treasure.new(:crowbar, 400) }
+  let(:bottle) { Treasure.new(:bottle, 5) }
 
   it 'has a capitialized name' do
     expect(player.name).to eq 'Aaron'
@@ -93,6 +94,28 @@ RSpec.describe Player do
       player.found_treasure(hammer)
       expect(player.points).to eq 500
     end
+  end
+
+  it 'yields each found treasure and its total points' do
+    player.found_treasure(crowbar)
+    player.found_treasure(crowbar)
+    player.found_treasure(hammer)
+    player.found_treasure(bottle)
+    player.found_treasure(bottle)
+    player.found_treasure(bottle)
+    player.found_treasure(bottle)
+    player.found_treasure(bottle)
+
+    yielded = []
+    player.each_found_treasure do |treasure|
+      yielded << treasure
+    end
+
+    expect(yielded).to eq [
+      Treasure.new(:crowbar, 800),
+      Treasure.new(:hammer, 50),
+      Treasure.new(:bottle, 25)
+    ]
   end
 
   # rubocop:enable Metrics/BlockLength

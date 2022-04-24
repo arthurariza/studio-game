@@ -37,7 +37,7 @@ class Game
         puts player
       end
     end
-    GameTurn.print_stats(@title, @players)
+    GameTurn.print_stats(@players)
     GameTurn.print_scores(@title, @players)
   end
 end

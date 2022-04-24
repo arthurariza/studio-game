@@ -49,17 +49,6 @@ RSpec.describe Game do
       game.add_player(player3)
     end
 
-    it 'prints the stats' do
-      allow(Die).to receive(:roll).and_return(3)
-      allow(TreasureTrove).to receive(:random).and_return(Treasure.new(:hammer, 50))
-
-      game.play(3)
-
-      expect do
-        GameTurn.print_stats(game.title, game.players)
-      end.to output("\nKnuckleheads Statistics:\n\nMoe's point totals:\n150 grand total points\n\nCurly's point totals:\n150 grand total points\n\nLarry's point totals:\n150 grand total points\n").to_stdout
-    end
-
     it 'prints the scores' do
       allow(Die).to receive(:roll).and_return(3)
       allow(TreasureTrove).to receive(:random).and_return(Treasure.new(:hammer, 50))
